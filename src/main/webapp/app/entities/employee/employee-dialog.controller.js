@@ -24,6 +24,9 @@
 
         function save () {
             vm.isSaving = true;
+
+            console.log("ISD ", vm.employee);
+
             if (vm.employee.id !== null) {
                 Employee.update(vm.employee, onSaveSuccess, onSaveError);
             } else {

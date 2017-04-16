@@ -5,26 +5,53 @@
         .module('auditorApp')
         .controller('LoadController', LoadController);
 
-    LoadController.$inject = ['$scope', 'LoadService'];
+    LoadController.$inject = ['$scope', 'Employee'];
 
-    function LoadController($scope, LoadService) {
+    function LoadController($scope, Employee) {
+
+        console.log("INITED");
+
         var vm = this;
 
-        $scope.controllerMessage = todayToString();
+        vm.onRead = onRead;
+        vm.onError = onError;
 
-        vm.todayToString = todayToString;
 
-        function todayToString() {
-            var today = new Date();
-            var dayName = today.toLocaleString('en-us', {weekday: 'long'});
-            var monthName = today.toLocaleString('en-us', {month: 'long'});
-            var date = today.getDate();
+        function onRead(workbook) {
+            console.log("ISD workbook", workbook);
 
-            return 'Today is ' + dayName + ', the ' + dateWithOrdinal(date) + ' of ' + monthName + ', ' + today.getFullYear();
+            //let cells = workbook.Sheets.TDSheet;
+            let sheet_name_list = workbook.SheetNames;
+            let cells = workbook.Sheets[sheet_name_list[0]];
+
+            for (let i = 1; cells['A' + i]; i++) {
+
+                console.log("ISD A" + i, cells['A' + i].v);
+                console.log("ISD C" + i, cells['C' + i].v);
+                console.log("ISD D" + i, cells['D' + i].v);
+                console.log("ISD E" + i, cells['E' + i].v);
+
+
+                let employee = {
+                    articul : cells['A' + i].v,
+                    label: cells['C' + i].v,
+                    barcode: cells['D' + i].v,
+                    expectedNumber: cells['E' + i].v,
+                    auditedNumber : 0
+                };
+
+
+                console.log("ISD try to insert", employee);
+
+                Employee.save(
+                    employee,
+                    res => console.log('ISD added', res),
+                    error => console.log('ISD error', error));
+            }
         }
 
-        function dateWithOrdinal(date) {
-            return date + LoadService.getOrdinalIndicator(date);
+        function onError(error) {
+            console.log("ISD error", error);
         }
 
     }
