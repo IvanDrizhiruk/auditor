@@ -5,46 +5,37 @@
         .module('auditorApp')
         .factory('FindService', FindService);
 
-    FindService.$inject = ['$resource'];
+    FindService.$inject = ['$resource', 'Employee'];
 
-    function FindService($resource) {
+    function FindService($resource, Employee) {
         var service = {
-            getOrdinalIndicator: getOrdinalIndicator
+            findEntities: findEntities,
+            registryCount: registryCount
         };
 
         return service;
 
-        function getOrdinalIndicator(n) {
-
-            if (n || n === 0) {
-
-                if (hasANonGenericOrdinalIndicator(n)) {
-                    return 'th';
+        function findEntities(query) {
+            return $resource('api/employees/find/:query', {}, {
+                'get': {
+                    method: 'GET',
+                    isArray: true,
+                    transformResponse: function (data) {
+                        if (data) {
+                            data = angular.fromJson(data);
+                        }
+                        return data;
+                    }
                 }
-
-                var decimal = n % 10;
-                switch (decimal) {
-                    case 1:
-                        return 'st';
-                        break;
-                    case 2:
-                        return 'nd';
-                        break;
-                    case 3:
-                        return 'rd';
-                        break;
-                    default:
-                        return 'th';
-                        break;
-                }
-            }
-
-            return '';
+            }).get({query : query}).$promise;
         }
 
-        function hasANonGenericOrdinalIndicator(n) {
-            var lastTwoDigits = n % 100;
-            return lastTwoDigits > 10 && lastTwoDigits < 14;
+        function registryCount(oldEntity, count) {
+            let newEntity = angular.copy(oldEntity);
+
+            newEntity.auditedNumber += count;
+
+            return Employee.update(newEntity);
         }
     }
 })();

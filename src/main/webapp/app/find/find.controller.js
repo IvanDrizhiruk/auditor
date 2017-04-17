@@ -10,22 +10,36 @@
     function FindController($scope, FindService) {
         var vm = this;
 
-        $scope.controllerMessage = todayToString();
+        vm.query;
+        vm.etities;
+        vm.count;
+        vm.focusOnFindInput = true;
+        vm.focusOnCountInput = false;
 
-        vm.todayToString = todayToString;
+        vm.onFind = onFind;
+        vm.onCountEnter = onCountEnter;
 
-        function todayToString() {
-            var today = new Date();
-            var dayName = today.toLocaleString('en-us', {weekday: 'long'});
-            var monthName = today.toLocaleString('en-us', {month: 'long'});
-            var date = today.getDate();
+        function onFind() {
+            console.log("ISD on find", vm.query);
+            vm.etities = [{name: 'test'}]
 
-            return 'Today is ' + dayName + ', the ' + dateWithOrdinal(date) + ' of ' + monthName + ', ' + today.getFullYear();
+            FindService.findEntities(vm.query).then(
+                function(entities) {
+                    vm.etities = entities;
+                    if (vm.etities.length > 0) {
+                        vm.focusOnCountInput = true;
+                    }
+                }
+            );
         }
 
-        function dateWithOrdinal(date) {
-            return date + FindService.getOrdinalIndicator(date);
-        }
+        function onCountEnter() {
+            FindService.registryCount(vm.etities[0], parseInt(vm.count));
 
+            vm.query = '';
+            vm.etities = [];
+            vm.count = '';
+            vm.focusOnFindInput = true;
+        }
     }
 })();

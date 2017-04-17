@@ -45,8 +45,8 @@
 
                 Employee.save(
                     employee,
-                    res => console.log('ISD added', res),
-                    error => console.log('ISD error', error));
+                    function (res) { console.log('ISD added', res)},
+                    function (error) { console.log('ISD error', error)});
             }
         }
 

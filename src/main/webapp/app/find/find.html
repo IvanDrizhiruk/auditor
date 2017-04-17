@@ -3,17 +3,61 @@
     <div class="col-md-1"></div>
     <div class="col-md-10">
 
-      <!--directive: start--><h6 faq-today></h6><!--directive: end-->
-      <h6 class="text-right" ng-bind="controllerMessage"></h6>
-
       <h1 class="text-capitalize text-center" data-translate="find.title">Title</h1>
-
       <h5 class="text-center" data-translate="find.subtitle">Subtitle</h5>
 
       <hr/>
 
       <p class="text-justify" data-translate="find.content">
-        Content
+
+        <div class="form-group">
+            <label for="findquery">Find</label>
+            <input type="text" class="form-control" id="findquery" name="findquery"
+                   autofocus
+                   focus-me="vm.focusOnFindInput"
+                   ng-model="vm.query"
+                   ng-keyup="$event.keyCode == 13 && vm.onFind()" />
+
+            <button type="button" class="btn btn-default" ng-click="vm.onFind()">
+                <span>Find</span>
+            </button>
+        </div>
+
+        <div class="table-responsive" ng-show="vm.etities.length > 0" >
+            <table class="jh-table table table-striped">
+                <thead>
+                <tr>
+
+                    <th><span>Articul</span></th>
+                    <th><span>Label</span></th>
+                    <th><span>Barcode</span></th>
+                    <th><span>Expected Number</span></th>
+                    <th><span>Audited Number</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="employee in vm.etities track by employee.id">
+                    <td>{{employee.articul}}</td>
+                    <td>{{employee.label}}</td>
+                    <td>{{employee.barcode}}</td>
+                    <td>{{employee.expectedNumber}}</td>
+                    <td>{{employee.auditedNumber}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-group" ng-show="vm.etities.length > 0">
+            <label for="cunt">Count</label>
+            <input type="text" class="form-control" id="cunt" name="cunt"
+                   focus-me="vm.focusOnCountInput"
+                   ng-model="vm.count"
+                   ng-keyup="$event.keyCode == 13 && vm.onCountEnter()" />
+
+            <button type="button" class="btn btn-default" ng-click="vm.onCountEnter()">
+                <span>Enter count</span>
+            </button>
+        </div>
       </p>
 
     </div>
