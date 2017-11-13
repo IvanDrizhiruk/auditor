@@ -1,7 +1,0 @@
-entity Employee {
-	articul String,
-	label String,
-	barcode String,
-	expectedNumber Long,
-        auditedNumber Long
-}
