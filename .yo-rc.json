@@ -1,32 +1,43 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "ua.dp.auditor"
+      "packageName": "com.auditor",
+      "nativeLanguage": "ua"
     },
-    "jhipsterVersion": "4.3.0",
+    "jhipsterVersion": "4.10.2",
     "baseName": "auditor",
-    "packageName": "ua.dp.auditor",
-    "packageFolder": "ua/dp/auditor",
+    "packageName": "com.auditor",
+    "packageFolder": "com/auditor",
     "serverPort": "8080",
-    "authenticationType": "session",
+    "authenticationType": "jwt",
     "hibernateCache": "no",
     "clusteredHttpSession": false,
     "websocket": false,
-    "databaseType": "sql",
-    "devDatabaseType": "h2Disk",
-    "prodDatabaseType": "postgresql",
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
     "searchEngine": false,
     "messageBroker": false,
-    "serviceDiscoveryType": false,
-    "buildTool": "gradle",
-    "enableSocialSignIn": false,
-    "rememberMeKey": "7d5f2907a66807210454706bf894681b69c8163b",
-    "clientFramework": "angular1",
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSocialSignIn": true,
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "d1f17b02aad9e4569b3486d480f9705fd3671abc",
+    "clientFramework": "angularX",
     "useSass": false,
     "clientPackageManager": "yarn",
     "applicationType": "monolith",
-    "testFrameworks": [],
+    "testFrameworks": [
+      "cucumber",
+      "protractor"
+    ],
     "jhiPrefix": "jhi",
-    "enableTranslation": false
+    "enableTranslation": true,
+    "nativeLanguage": "ua",
+    "languages": [
+      "ua",
+      "en",
+      "ru"
+    ]
   }
 }
