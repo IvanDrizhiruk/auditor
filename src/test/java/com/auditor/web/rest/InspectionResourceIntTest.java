@@ -1,18 +1,16 @@
 package com.auditor.web.rest;
 
 import com.auditor.AuditorApp;
-
 import com.auditor.domain.Inspection;
 import com.auditor.repository.InspectionRepository;
-import com.auditor.service.inspection.InspectionService;
 import com.auditor.service.inspection.InspectionDTO;
-import com.auditor.service.inspection.InspectionMapper;
+import com.auditor.service.inspection.InspectionService;
 import com.auditor.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
@@ -60,7 +58,7 @@ public class InspectionResourceIntTest {
     private InspectionRepository inspectionRepository;
 
     @Autowired
-    private InspectionMapper inspectionMapper;
+    private ModelMapper modelMapper;
 
     @Autowired
     private InspectionService inspectionService;
@@ -118,7 +116,7 @@ public class InspectionResourceIntTest {
         int databaseSizeBeforeCreate = inspectionRepository.findAll().size();
 
         // Create the Inspection
-        InspectionDTO inspectionDTO = inspectionMapper.toDto(inspection);
+        InspectionDTO inspectionDTO = modelMapper.map(inspection, InspectionDTO.class);
         restInspectionMockMvc.perform(post("/api/inspections")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(inspectionDTO)))
@@ -141,7 +139,7 @@ public class InspectionResourceIntTest {
 
         // Create the Inspection with an existing ID
         inspection.setId("existing_id");
-        InspectionDTO inspectionDTO = inspectionMapper.toDto(inspection);
+        InspectionDTO inspectionDTO = modelMapper.map(inspection, InspectionDTO.class);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restInspectionMockMvc.perform(post("/api/inspections")
@@ -161,7 +159,7 @@ public class InspectionResourceIntTest {
         inspection.setCompanyId(null);
 
         // Create the Inspection, which fails.
-        InspectionDTO inspectionDTO = inspectionMapper.toDto(inspection);
+        InspectionDTO inspectionDTO = modelMapper.map(inspection, InspectionDTO.class);
 
         restInspectionMockMvc.perform(post("/api/inspections")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -179,7 +177,7 @@ public class InspectionResourceIntTest {
         inspection.setStartDate(null);
 
         // Create the Inspection, which fails.
-        InspectionDTO inspectionDTO = inspectionMapper.toDto(inspection);
+        InspectionDTO inspectionDTO = modelMapper.map(inspection, InspectionDTO.class);
 
         restInspectionMockMvc.perform(post("/api/inspections")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -197,7 +195,7 @@ public class InspectionResourceIntTest {
         inspection.setEndDate(null);
 
         // Create the Inspection, which fails.
-        InspectionDTO inspectionDTO = inspectionMapper.toDto(inspection);
+        InspectionDTO inspectionDTO = modelMapper.map(inspection, InspectionDTO.class);
 
         restInspectionMockMvc.perform(post("/api/inspections")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -263,7 +261,7 @@ public class InspectionResourceIntTest {
         updatedInspection.setCompanyId(UPDATED_COMPANY_ID);
         updatedInspection.setStartDate(UPDATED_START_DATE);
         updatedInspection.setEndDate(UPDATED_END_DATE);
-        InspectionDTO inspectionDTO = inspectionMapper.toDto(updatedInspection);
+        InspectionDTO inspectionDTO = modelMapper.map(updatedInspection, InspectionDTO.class);
 
         restInspectionMockMvc.perform(put("/api/inspections")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -286,7 +284,7 @@ public class InspectionResourceIntTest {
         int databaseSizeBeforeUpdate = inspectionRepository.findAll().size();
 
         // Create the Inspection
-        InspectionDTO inspectionDTO = inspectionMapper.toDto(inspection);
+        InspectionDTO inspectionDTO = modelMapper.map(inspection, InspectionDTO.class);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restInspectionMockMvc.perform(put("/api/inspections")

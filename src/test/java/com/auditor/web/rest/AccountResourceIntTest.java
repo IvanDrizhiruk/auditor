@@ -1,7 +1,7 @@
 package com.auditor.web.rest;
 
-import com.auditor.config.Constants;
 import com.auditor.AuditorApp;
+import com.auditor.config.Constants;
 import com.auditor.domain.Authority;
 import com.auditor.domain.User;
 import com.auditor.repository.AuthorityRepository;
@@ -9,12 +9,11 @@ import com.auditor.repository.UserRepository;
 import com.auditor.security.AuthoritiesConstants;
 import com.auditor.service.MailService;
 import com.auditor.service.user.UserDTO;
+import com.auditor.service.user.UserService;
 import com.auditor.web.rest.errors.ExceptionTranslator;
 import com.auditor.web.rest.vm.KeyAndPasswordVM;
 import com.auditor.web.rest.vm.ManagedUserVM;
-import com.auditor.service.user.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,16 +28,19 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import java.time.Instant;
 
-import java.util.*;
+import java.time.Instant;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -459,8 +461,8 @@ public class AccountResourceIntTest {
             "firstname",                // firstName
             "lastname",                  // lastName
             "save-account@example.com",    // email
-            false,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            false,                   // activated
             Constants.DEFAULT_LANGUAGE,// langKey
             null,                   // createdBy
             null,                   // createdDate
@@ -503,8 +505,8 @@ public class AccountResourceIntTest {
             "firstname",                // firstName
             "lastname",                  // lastName
             "invalid email",    // email
-            false,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            false,                   // activated
             Constants.DEFAULT_LANGUAGE,// langKey
             null,                   // createdBy
             null,                   // createdDate
@@ -547,8 +549,8 @@ public class AccountResourceIntTest {
             "firstname",                // firstName
             "lastname",                  // lastName
             "save-existing-email2@example.com",    // email
-            false,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            false,                   // activated
             Constants.DEFAULT_LANGUAGE,// langKey
             null,                   // createdBy
             null,                   // createdDate
@@ -584,8 +586,8 @@ public class AccountResourceIntTest {
             "firstname",                // firstName
             "lastname",                  // lastName
             "save-existing-email-and-login@example.com",    // email
-            false,                   // activated
             "http://placehold.it/50x50", //imageUrl
+            false,                   // activated
             Constants.DEFAULT_LANGUAGE,// langKey
             null,                   // createdBy
             null,                   // createdDate

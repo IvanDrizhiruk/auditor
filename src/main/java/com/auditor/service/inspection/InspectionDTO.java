@@ -1,6 +1,7 @@
 package com.auditor.service.inspection;
 
 
+import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -55,6 +56,6 @@ public class InspectionDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "";
+        return new Gson().toJson(this);
     }
 }

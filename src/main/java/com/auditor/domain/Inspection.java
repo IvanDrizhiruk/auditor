@@ -1,5 +1,6 @@
 package com.auditor.domain;
 
+import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -20,6 +21,7 @@ public class Inspection implements Serializable {
     @Id
     private String id;
 
+    @NotNull
     @Field("name")
     private String name;
 
@@ -38,4 +40,9 @@ public class Inspection implements Serializable {
     @NotNull
     @Field("end_date")
     private Instant endDate;
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }
