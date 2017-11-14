@@ -8,11 +8,11 @@ import com.auditor.repository.AuthorityRepository;
 import com.auditor.repository.UserRepository;
 import com.auditor.security.AuthoritiesConstants;
 import com.auditor.service.MailService;
-import com.auditor.service.dto.UserDTO;
+import com.auditor.service.user.UserDTO;
 import com.auditor.web.rest.errors.ExceptionTranslator;
 import com.auditor.web.rest.vm.KeyAndPasswordVM;
 import com.auditor.web.rest.vm.ManagedUserVM;
-import com.auditor.service.UserService;
+import com.auditor.service.user.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import org.junit.Before;
@@ -30,7 +30,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.time.Instant;
-import java.time.LocalDate;
 
 import java.util.*;
 

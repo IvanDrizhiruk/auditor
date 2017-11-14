@@ -1,4 +1,4 @@
-package com.auditor.service.dto;
+package com.auditor.service.user;
 
 import com.auditor.config.Constants;
 

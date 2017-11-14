@@ -4,7 +4,8 @@ import com.auditor.AuditorApp;
 import com.auditor.config.Constants;
 import com.auditor.domain.User;
 import com.auditor.repository.UserRepository;
-import com.auditor.service.dto.UserDTO;
+import com.auditor.service.user.UserDTO;
+import com.auditor.service.user.UserService;
 import com.auditor.service.util.RandomUtil;
 
 import org.apache.commons.lang3.RandomStringUtils;

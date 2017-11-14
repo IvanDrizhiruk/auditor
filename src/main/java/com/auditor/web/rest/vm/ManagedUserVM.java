@@ -1,6 +1,6 @@
 package com.auditor.web.rest.vm;
 
-import com.auditor.service.dto.UserDTO;
+import com.auditor.service.user.UserDTO;
 import javax.validation.constraints.Size;
 
 import java.time.Instant;

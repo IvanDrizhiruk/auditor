@@ -1,0 +1,25 @@
+{
+    "auditorApp": {
+        "inspection" : {
+            "home": {
+                "title": "Inspections",
+                "createLabel": "Create a new Inspection",
+                "createOrEditLabel": "Create or edit a Inspection"
+            },
+            "created": "A new Inspection is created with identifier {{ param }}",
+            "updated": "A Inspection is updated with identifier {{ param }}",
+            "deleted": "A Inspection is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Inspection {{ id }}?"
+            },
+            "detail": {
+                "title": "Inspection"
+            },
+            "name": "Name",
+            "description": "Description",
+            "companyId": "Company Id",
+            "startDate": "Start Date",
+            "endDate": "End Date"
+        }
+    }
+}

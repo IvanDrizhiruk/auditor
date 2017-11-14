@@ -1,4 +1,4 @@
-package com.auditor.service;
+package com.auditor.service.user;
 
 import com.auditor.domain.Authority;
 import com.auditor.domain.User;
@@ -7,8 +7,8 @@ import com.auditor.config.Constants;
 import com.auditor.repository.UserRepository;
 import com.auditor.security.AuthoritiesConstants;
 import com.auditor.security.SecurityUtils;
+import com.auditor.service.SocialService;
 import com.auditor.service.util.RandomUtil;
-import com.auditor.service.dto.UserDTO;
 import com.auditor.web.rest.vm.ManagedUserVM;
 
 import org.slf4j.Logger;
