@@ -1,0 +1,24 @@
+{
+    "auditorApp": {
+        "item" : {
+            "home": {
+                "title": "Items",
+                "createLabel": "Створити новий Item",
+                "createOrEditLabel": "Створити чи редагувати Item"
+            },
+            "created": "Новий Item створений з ідентифікатором {{ param }}",
+            "updated": "Item оновлений з ідентифікатором {{ param }}",
+            "deleted": "Item видалений з ідентифікатором {{ param }}",
+            "delete": {
+                "question": "Ви впевнені, що хочете видалити Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Item"
+            },
+            "code": "Code",
+            "description": "Description",
+            "expectedCount": "Expected Count",
+            "actualCount": "Actual Count"
+        }
+    }
+}

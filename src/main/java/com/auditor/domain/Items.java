@@ -1,26 +1,35 @@
 package com.auditor.domain;
 
-
 import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
-@Document(collection = "jhi_authority")
-public class Authority implements Serializable {
-
+@Document(collection = "items")
+public class Items implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
-    @Size(max = 50)
     @Id
-    private String name;
+    private String id;
+
+    @NotNull
+    @Field("inspection_id")
+    private String inspectionId;
+
+    @Field("list")
+    private List<Item> list;
+
+    @Field("count")
+    private Integer count;
 
     @Override
     public boolean equals(Object o) {
@@ -30,15 +39,16 @@ public class Authority implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
-        Authority authority = (Authority) o;
-
-        return !(name != null ? !name.equals(authority.name) : authority.name != null);
+        Items items = (Items) o;
+        if (items.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), items.getId());
     }
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+        return Objects.hashCode(getId());
     }
 
     @Override

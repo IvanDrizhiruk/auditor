@@ -1,0 +1,21 @@
+{
+    "auditorApp": {
+        "items" : {
+            "home": {
+                "title": "Items",
+                "createLabel": "Создать новый Items",
+                "createOrEditLabel": "Создать или отредактировать Items"
+            },
+            "created": "Новый Items создан с идентификатором {{ param }}",
+            "updated": "Items обновлен с идентификатором {{ param }}",
+            "deleted": "Items удален с идентификатором {{ param }}",
+            "delete": {
+                "question": "Вы уверены что хотите удалить Items {{ id }}?"
+            },
+            "detail": {
+                "title": "Items"
+            },
+            "inspectionId": "Inspection Id"
+        }
+    }
+}
