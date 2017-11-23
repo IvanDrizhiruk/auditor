@@ -2,12 +2,10 @@
 Main page styles
 ========================================================================== */
 
-.hipster {
-    display: inline-block;
-    width: 347px;
-    height: 497px;
-    background: url("../../content/images/hipster.png") no-repeat center top;
-    background-size: contain;
+.advertisement {
+    border: #CCCCCC 1px solid;
+    width: 100%;
+    height: 100%;
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
