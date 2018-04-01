@@ -25,12 +25,25 @@ export class ItemsResolvePagingParams implements Resolve<any> {
     }
 }
 
+@Injectable()
+export class CustomParams implements Resolve<any> {
+
+    constructor() {}
+
+    resolve(route: ActivatedRouteSnapshot) {
+        return {
+            inspectionId: route.params.inspectionId
+      };
+    }
+}
+
 export const itemsRoute: Routes = [
     {
-        path: 'items',
+        path: 'inspections/:inspectionId/items',
         component: ItemsComponent,
         resolve: {
-            'pagingParams': ItemsResolvePagingParams
+            'pagingParams': ItemsResolvePagingParams,
+            'params': CustomParams
         },
         data: {
             authorities: ['ROLE_USER'],

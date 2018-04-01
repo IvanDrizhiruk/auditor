@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -39,9 +38,9 @@ public class Inspection implements Serializable {
     @NotNull
     @Field("end_date")
     private LocalDate endDate;
-
-    @DBRef
-    private Items items;
+//todo remoove
+    @Field("itemsCount")
+    private Integer itemsCount;
 
     @Override
     public boolean equals(Object o) {

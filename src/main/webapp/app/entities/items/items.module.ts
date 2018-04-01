@@ -14,6 +14,7 @@ import {
     itemsRoute,
     itemsPopupRoute,
     ItemsResolvePagingParams,
+    CustomParams,
 } from './';
 
 const ENTITY_STATES = [
@@ -45,6 +46,7 @@ const ENTITY_STATES = [
         ItemsService,
         ItemsPopupService,
         ItemsResolvePagingParams,
+        CustomParams,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

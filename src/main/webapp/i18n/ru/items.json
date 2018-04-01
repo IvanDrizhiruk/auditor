@@ -2,20 +2,21 @@
     "auditorApp": {
         "items" : {
             "home": {
-                "title": "Items",
-                "createLabel": "Создать новый Items",
-                "createOrEditLabel": "Создать или отредактировать Items"
+                "title": "Позиции",
+                "createLabel": "Создать новую позицию",
+                "createOrEditLabel": "Создать или отредактировать позицию"
             },
-            "created": "Новый Items создан с идентификатором {{ param }}",
-            "updated": "Items обновлен с идентификатором {{ param }}",
-            "deleted": "Items удален с идентификатором {{ param }}",
+            "created": "Новая позиция создана с идентификатором {{ param }}",
+            "updated": "Позиция обновлена с идентификатором {{ param }}",
+            "deleted": "Позиция удалена с идентификатором {{ param }}",
             "delete": {
-                "question": "Вы уверены что хотите удалить Items {{ id }}?"
+                "question": "Вы уверены что хотите удалить позицию {{ id }}?"
             },
             "detail": {
-                "title": "Items"
+                "title": "Позиции"
             },
-            "inspectionId": "Inspection Id"
+            "inspectionId": "ИД Аудита",
+            "description" : "Описание"
         }
     }
 }

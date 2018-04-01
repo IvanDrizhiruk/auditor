@@ -34,11 +34,23 @@
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
+                                [routerLink]="['../inspections/', inspection.id, 'items' ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View Items</span>
+                        </button>
+                        <!--button type="submit"
+                                (click)="navigateToItems(inspection.id)"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View InspectionItem</span>
+                        </button-->
+                        <!--button type="submit"
                                 [routerLink]="['../inspection', inspection.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View Inspection</span>
+                        </button-->
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'inspection/'+ inspection.id + '/edit'} }]"
                                 replaceUrl="true"

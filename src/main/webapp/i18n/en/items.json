@@ -15,7 +15,8 @@
             "detail": {
                 "title": "Items"
             },
-            "inspectionId": "Inspection Id"
+            "inspectionId": "Inspection Id",
+            "description" : "Description"
         }
     }
 }

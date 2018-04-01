@@ -9,27 +9,27 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
 @Document(collection = "items")
-public class Items implements Serializable {
+public class InspectionItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     private String id;
-
+    @Field("code")
+    private String code;
+    @Field("description")
+    private String description;
+    @Field("expected_count")
+    private Double expectedCount;
+    @Field("actual_count")
+    private Double actualCount;
     @NotNull
     @Field("inspection_id")
     private String inspectionId;
-
-    @Field("list")
-    private List<Item> list;
-
-    @Field("count")
-    private Integer count;
 
     @Override
     public boolean equals(Object o) {
@@ -39,11 +39,11 @@ public class Items implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Items items = (Items) o;
-        if (items.getId() == null || getId() == null) {
+        InspectionItem inspectionItems = (InspectionItem) o;
+        if (inspectionItems.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), items.getId());
+        return Objects.equals(getId(), inspectionItems.getId());
     }
 
     @Override

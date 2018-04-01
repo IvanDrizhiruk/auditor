@@ -1,13 +1,15 @@
 <div class="row">
-    <div class="col-md-3">
-        <div class="advertisement img-fluid rounded"></div>
+    <div class="{{isAuthenticated() ? '' : 'col-md-3'}}">
+        <div *ngIf="!isAuthenticated()" class="advertisement img-fluid rounded"></div>
     </div>
-    <div class="col-md-9">
+    <div class="{{isAuthenticated() ? 'col-md-12' : 'col-md-9'}}">
         <div *ngIf="account && isAuthenticated()" class="alert alert-success">
                 <span jhiTranslate="home.logged.message"
-                      translateValues="{username: '{{account.login}}'}"> You are logged in as user "{{account.login}}". </span>
+                      translateValues="{username: '{{account.login}}'}"> Ви ввійшли як користувач "{{account.login}}". </span>
         </div>
-        <h1 class="display-3" jhiTranslate="home.title">Ласкаво просимо, до порталу "Аудитор"!</h1>
+
+        <h1 *ngIf="!isAuthenticated()" class="display-3" jhiTranslate="home.title">Ласкаво просимо, до системи "Аудитор"!</h1>
+
         <div *ngIf="account && isAuthenticated()">
             <span class="lead" jhiTranslate="home.subtitle">Це ваша домашня сторінка</span>
         </div>

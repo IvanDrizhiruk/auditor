@@ -2,9 +2,9 @@ package com.auditor.web.rest;
 
 import com.auditor.AuditorApp;
 
-import com.auditor.domain.Items;
+import com.auditor.domain.InspectionItem;
 import com.auditor.repository.ItemsRepository;
-import com.auditor.service.ItemsService;
+import com.auditor.service.InspectionItemsService;
 import com.auditor.service.dto.ItemsDTO;
 import com.auditor.web.rest.errors.ExceptionTranslator;
 
@@ -49,7 +49,7 @@ public class ItemsResourceIntTest {
     private ModelMapper modelMapper;
 
     @Autowired
-    private ItemsService itemsService;
+    private InspectionItemsService itemsService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -62,7 +62,7 @@ public class ItemsResourceIntTest {
 
     private MockMvc restItemsMockMvc;
 
-    private Items items;
+    private InspectionItem inspectionItem;
 
     @Before
     public void setup() {
@@ -81,33 +81,33 @@ public class ItemsResourceIntTest {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Items createEntity() {
-        Items items = new Items();
-        items.setInspectionId(DEFAULT_INSPECTION_ID);
-        return items;
+    public static InspectionItem createEntity() {
+        InspectionItem inspectionItem = new InspectionItem();
+        inspectionItem.setInspectionId(DEFAULT_INSPECTION_ID);
+        return inspectionItem;
     }
 
     @Before
     public void initTest() {
         itemsRepository.deleteAll();
-        items = createEntity();
+        inspectionItem = createEntity();
     }
 
     @Test
     public void createItems() throws Exception {
         int databaseSizeBeforeCreate = itemsRepository.findAll().size();
 
-        // Create the Items
-        ItemsDTO itemsDTO = modelMapper.map(items, ItemsDTO.class);
-        restItemsMockMvc.perform(post("/api/items")
+        // Create the InspectionItem
+        ItemsDTO itemsDTO = modelMapper.map(inspectionItem, ItemsDTO.class);
+        restItemsMockMvc.perform(post("/api/inspectionItem")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(itemsDTO)))
             .andExpect(status().isCreated());
 
-        // Validate the Items in the database
-        List<Items> itemsList = itemsRepository.findAll();
-        assertThat(itemsList).hasSize(databaseSizeBeforeCreate + 1);
-        Items testItems = itemsList.get(itemsList.size() - 1);
+        // Validate the InspectionItem in the database
+        List<InspectionItem> inspectionItems = itemsRepository.findAll();
+        assertThat(inspectionItems).hasSize(databaseSizeBeforeCreate + 1);
+        InspectionItem testItems = inspectionItems.get(inspectionItems.size() - 1);
         assertThat(testItems.getInspectionId()).isEqualTo(DEFAULT_INSPECTION_ID);
     }
 
@@ -115,141 +115,141 @@ public class ItemsResourceIntTest {
     public void createItemsWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = itemsRepository.findAll().size();
 
-        // Create the Items with an existing ID
-        items.setId("existing_id");
-        ItemsDTO itemsDTO = modelMapper.map(items, ItemsDTO.class);
+        // Create the InspectionItem with an existing ID
+        inspectionItem.setId("existing_id");
+        ItemsDTO itemsDTO = modelMapper.map(inspectionItem, ItemsDTO.class);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restItemsMockMvc.perform(post("/api/items")
+        restItemsMockMvc.perform(post("/api/inspectionItem")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(itemsDTO)))
             .andExpect(status().isBadRequest());
 
-        // Validate the Items in the database
-        List<Items> itemsList = itemsRepository.findAll();
-        assertThat(itemsList).hasSize(databaseSizeBeforeCreate);
+        // Validate the InspectionItem in the database
+        List<InspectionItem> inspectionItems = itemsRepository.findAll();
+        assertThat(inspectionItems).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
     public void checkInspectionIdIsRequired() throws Exception {
         int databaseSizeBeforeTest = itemsRepository.findAll().size();
         // set the field null
-        items.setInspectionId(null);
+        inspectionItem.setInspectionId(null);
 
-        // Create the Items, which fails.
-        ItemsDTO itemsDTO = modelMapper.map(items, ItemsDTO.class);
+        // Create the InspectionItem, which fails.
+        ItemsDTO itemsDTO = modelMapper.map(inspectionItem, ItemsDTO.class);
 
-        restItemsMockMvc.perform(post("/api/items")
+        restItemsMockMvc.perform(post("/api/inspectionItem")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(itemsDTO)))
             .andExpect(status().isBadRequest());
 
-        List<Items> itemsList = itemsRepository.findAll();
-        assertThat(itemsList).hasSize(databaseSizeBeforeTest);
+        List<InspectionItem> inspectionItemList = itemsRepository.findAll();
+        assertThat(inspectionItemList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
     public void getAllItems() throws Exception {
         // Initialize the database
-        itemsRepository.save(items);
+        itemsRepository.save(inspectionItem);
 
         // Get all the itemsList
-        restItemsMockMvc.perform(get("/api/items?sort=id,desc"))
+        restItemsMockMvc.perform(get("/api/inspectionItem?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(items.getId())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(inspectionItem.getId())))
             .andExpect(jsonPath("$.[*].inspectionId").value(hasItem(DEFAULT_INSPECTION_ID.toString())));
     }
 
     @Test
     public void getItems() throws Exception {
         // Initialize the database
-        itemsRepository.save(items);
+        itemsRepository.save(inspectionItem);
 
-        // Get the items
-        restItemsMockMvc.perform(get("/api/items/{id}", items.getId()))
+        // Get the inspectionItem
+        restItemsMockMvc.perform(get("/api/inspectionItem/{id}", inspectionItem.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(items.getId()))
+            .andExpect(jsonPath("$.id").value(inspectionItem.getId()))
             .andExpect(jsonPath("$.inspectionId").value(DEFAULT_INSPECTION_ID.toString()));
     }
 
     @Test
     public void getNonExistingItems() throws Exception {
-        // Get the items
-        restItemsMockMvc.perform(get("/api/items/{id}", Long.MAX_VALUE))
+        // Get the inspectionItem
+        restItemsMockMvc.perform(get("/api/inspectionItem/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
     }
 
     @Test
     public void updateItems() throws Exception {
         // Initialize the database
-        itemsRepository.save(items);
+        itemsRepository.save(inspectionItem);
         int databaseSizeBeforeUpdate = itemsRepository.findAll().size();
 
-        // Update the items
-        Items updatedItems = itemsRepository.findOne(items.getId());
-        updatedItems.setInspectionId(UPDATED_INSPECTION_ID);
-        ItemsDTO itemsDTO = modelMapper.map(updatedItems, ItemsDTO.class);
+        // Update the inspectionItem
+        InspectionItem updatedInspectionItems = itemsRepository.findOne(inspectionItem.getId());
+        updatedInspectionItems.setInspectionId(UPDATED_INSPECTION_ID);
+        ItemsDTO itemsDTO = modelMapper.map(updatedInspectionItems, ItemsDTO.class);
 
-        restItemsMockMvc.perform(put("/api/items")
+        restItemsMockMvc.perform(put("/api/inspectionItem")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(itemsDTO)))
             .andExpect(status().isOk());
 
-        // Validate the Items in the database
-        List<Items> itemsList = itemsRepository.findAll();
-        assertThat(itemsList).hasSize(databaseSizeBeforeUpdate);
-        Items testItems = itemsList.get(itemsList.size() - 1);
-        assertThat(testItems.getInspectionId()).isEqualTo(UPDATED_INSPECTION_ID);
+        // Validate the InspectionItem in the database
+        List<InspectionItem> inspectionItems = itemsRepository.findAll();
+        assertThat(inspectionItems).hasSize(databaseSizeBeforeUpdate);
+        InspectionItem testInspectionItems = inspectionItems.get(inspectionItems.size() - 1);
+        assertThat(testInspectionItems.getInspectionId()).isEqualTo(UPDATED_INSPECTION_ID);
     }
 
     @Test
     public void updateNonExistingItems() throws Exception {
         int databaseSizeBeforeUpdate = itemsRepository.findAll().size();
 
-        // Create the Items
-        ItemsDTO itemsDTO = modelMapper.map(items, ItemsDTO.class);
+        // Create the InspectionItem
+        ItemsDTO itemsDTO = modelMapper.map(inspectionItem, ItemsDTO.class);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
-        restItemsMockMvc.perform(put("/api/items")
+        restItemsMockMvc.perform(put("/api/inspectionItem")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(itemsDTO)))
             .andExpect(status().isCreated());
 
-        // Validate the Items in the database
-        List<Items> itemsList = itemsRepository.findAll();
-        assertThat(itemsList).hasSize(databaseSizeBeforeUpdate + 1);
+        // Validate the InspectionItem in the database
+        List<InspectionItem> inspectionItems = itemsRepository.findAll();
+        assertThat(inspectionItems).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
     @Test
     public void deleteItems() throws Exception {
         // Initialize the database
-        itemsRepository.save(items);
+        itemsRepository.save(inspectionItem);
         int databaseSizeBeforeDelete = itemsRepository.findAll().size();
 
-        // Get the items
-        restItemsMockMvc.perform(delete("/api/items/{id}", items.getId())
+        // Get the inspectionItem
+        restItemsMockMvc.perform(delete("/api/inspectionItem/{id}", inspectionItem.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<Items> itemsList = itemsRepository.findAll();
-        assertThat(itemsList).hasSize(databaseSizeBeforeDelete - 1);
+        List<InspectionItem> inspectionItems = itemsRepository.findAll();
+        assertThat(inspectionItems).hasSize(databaseSizeBeforeDelete - 1);
     }
 
     @Test
     public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Items.class);
-        Items items1 = new Items();
-        items1.setId("id1");
-        Items items2 = new Items();
-        items2.setId(items1.getId());
-        assertThat(items1).isEqualTo(items2);
-        items2.setId("id2");
-        assertThat(items1).isNotEqualTo(items2);
-        items1.setId(null);
-        assertThat(items1).isNotEqualTo(items2);
+        TestUtil.equalsVerifier(InspectionItem.class);
+        InspectionItem inspectionItems1 = new InspectionItem();
+        inspectionItems1.setId("id1");
+        InspectionItem inspectionItems2 = new InspectionItem();
+        inspectionItems2.setId(inspectionItems1.getId());
+        assertThat(inspectionItems1).isEqualTo(inspectionItems2);
+        inspectionItems2.setId("id2");
+        assertThat(inspectionItems1).isNotEqualTo(inspectionItems2);
+        inspectionItems1.setId(null);
+        assertThat(inspectionItems1).isNotEqualTo(inspectionItems2);
     }
 
     @Test

@@ -27,6 +27,7 @@ currentAccount: any;
     predicate: any;
     previousPage: any;
     reverse: any;
+    inspectionId: string;
 
     constructor(
         private itemsService: ItemsService,
@@ -43,14 +44,17 @@ currentAccount: any;
             this.previousPage = data['pagingParams'].page;
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
+            this.inspectionId = data['params']['inspectionId'];
         });
     }
 
     loadAll() {
         this.itemsService.query({
-            page: this.page - 1,
-            size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
+                page: this.page - 1,
+                size: this.itemsPerPage,
+                sort: this.sort(),
+                inspectionId: this.inspectionId,
+            }).subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -62,7 +66,7 @@ currentAccount: any;
         }
     }
     transition() {
-        this.router.navigate(['/items'], {queryParams:
+        this.router.navigate(['/inspections/' + this.inspectionId + '/items'], {queryParams:
             {
                 page: this.page,
                 size: this.itemsPerPage,
@@ -74,7 +78,7 @@ currentAccount: any;
 
     clear() {
         this.page = 0;
-        this.router.navigate(['/items', {
+        this.router.navigate(['/inspections/' + this.inspectionId + '/items', {
             page: this.page,
             sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
         }]);
